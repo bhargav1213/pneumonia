@@ -106,7 +106,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-    model =load_model('pneumonia_model.h5') # Load the specific model file
+    model = load_model('pneumonia_model.h5', compile=False)
     class_names = ['PNEUMONIA', 'NORMAL']
     
     st.title('Pneumonia Classification')
