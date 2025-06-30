@@ -106,24 +106,29 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
+   model = None
     try:
-        model = load_model("pneumonia_model.h5", compile=False)
+        model = load_model('pneumonia_model.h5', compile=False)
         model.summary()
     except Exception as e:
-        print("Failed to load model:", e)
+        st.error(f"Failed to load model: {e}")
+    
     class_names = ['PNEUMONIA', 'NORMAL']
     
     st.title('Pneumonia Classification')
     st.header('Please upload a chest X-ray image')
     file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
-
+    
     if file is not None:
-        image = Image.open(file).convert('RGB')
-        st.image(image, use_container_width=True)
-        
-        class_name, conf_score = classify(image, model, class_names)
-        st.write("## {}".format(class_name))
-        st.write("### Confidence: {:.2f}%".format(conf_score * 100))
+        if model is None:
+            st.error("Model not loaded. Cannot perform classification.")
+        else:
+            image = Image.open(file).convert('RGB')
+            st.image(image, use_container_width=True)
+            
+            class_name, conf_score = classify(image, model, class_names)
+            st.write(f"## {class_name}")
+            st.write(f"### Confidence: {conf_score * 100:.2f}%")
 
 # Page: Patient Experiences
 elif st.session_state.page == "Patient Experiences":
