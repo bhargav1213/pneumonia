@@ -9,6 +9,9 @@ def classify(image, model, class_names):
     prediction = model.predict(img_array)
     class_idx = np.argmax(prediction[0])
     confidence = prediction[0][class_idx]
+    if confidence < 0.5 :
+        class_idx = 1
+        confidence = 1 - confidence
     return class_names[class_idx], confidence
 
 def set_background(image_path):
