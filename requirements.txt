@@ -1,6 +1,6 @@
-streamlit==1.27.2
-pillow
+streamlit
 tensorflow==2.13.0
-keras
+pillow
 numpy
+keras
 gdown
