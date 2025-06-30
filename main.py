@@ -10,14 +10,17 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
-@st.cache_resource
-def load_remote_model():
-    url = 'https://drive.google.com/uc?id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU'
-    output = 'pneumonia_model.h5'
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
-    return load_model(output)
+# @st.cache_resource
+# def load_remote_model():
+#     url = 'https://drive.google.com/uc?id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU'
+#     output = 'pneumonia_model.h5'
+#     if not os.path.exists(output):
+#         gdown.download(url, output, quiet=False)
+#     return load_model(output)
 # Load GoMapsPro API key from secrets
+import gdown
+gdown.download('https://drive.google.com/uc?id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU', 'test_model.h5', quiet=False)
+
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
 except Exception as e:
@@ -114,7 +117,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-    model = load_remote_model()  # Load the specific model file
+    load_model('test_model.h5') # Load the specific model file
     class_names = ['PNEUMONIA', 'NORMAL']
     
     st.title('Pneumonia Classification')
