@@ -106,7 +106,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-   model = None
+    model = None
     try:
         model = load_model('pneumonia_model.h5', compile=False)
         model.summary()
