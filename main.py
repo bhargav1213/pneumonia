@@ -18,8 +18,8 @@ import gdown
 #         gdown.download(url, output, quiet=False)
 #     return load_model(output)
 # Load GoMapsPro API key from secrets
-import gdown
-gdown.download('https://drive.google.com/uc?id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU', 'test_model.h5', quiet=False)
+# import gdown
+# gdown.download('https://drive.google.com/uc?id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU', 'test_model.h5', quiet=False)
 
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
@@ -117,7 +117,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-    load_model('test_model.h5') # Load the specific model file
+    load_model('pneumonia_model.h5') # Load the specific model file
     class_names = ['PNEUMONIA', 'NORMAL']
     
     st.title('Pneumonia Classification')
