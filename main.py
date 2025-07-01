@@ -10,6 +10,11 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
+@st.cache_resource
+def get_model():
+    return load_model("pneumonia_model.keras", compile=False)
+
+
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
 except Exception as e:
@@ -106,7 +111,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-    model = load_model("pneumonia_model.keras")
+    model = get_model()
     
     class_names = ['PNEUMONIA', 'NORMAL']
     
