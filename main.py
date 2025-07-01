@@ -8,12 +8,8 @@ import urllib.parse
 import sqlite3
 import os
 import streamlit.components.v1 as components
-
-
-
 import gdown
 
-@st.cache_resource
 def load_remote_model():
     url = 'https://drive.google.com/file/d1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing'  
     output = 'pneumonia_model.h5'
