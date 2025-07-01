@@ -131,7 +131,7 @@ if st.session_state.page == "Pneumonia Classification":
 
     if file is not None:
         image = Image.open(file).convert('RGB')
-        st.image(image, use_column_width=True)
+        st.image(image, use_container_width =True)
         
         class_name, conf_score = classify(image, model, class_names)
         st.write("## {}".format(class_name))
