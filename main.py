@@ -15,15 +15,11 @@ import gdown
 
 @st.cache_resource
 def load_remote_model():
-    url = 'https://drive.google.com/file/d/1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing'  
+    url = 'https://drive.google.com/file/d1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing'  
     output = 'pneumonia_model.h5'
     if not os.path.exists(output):
         gdown.download(url, output, quiet=False)
     return load_model(output)
-
-
-
-
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
