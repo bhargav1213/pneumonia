@@ -10,12 +10,6 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
-import os
-import gdown
-from keras.models import load_model
-import streamlit as st
-
-
 def check_file_download(url, output_path):
     """Check if the file is downloaded successfully."""
     if os.path.exists(output_path):
@@ -46,22 +40,21 @@ def verify_model_file(output_path):
     st.write(f"Model file {output_path} size: {file_size} bytes.")
     return True
 
-def load_remote_model(url='https://drive.google.com/uc?export=download&id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU', output='pneumonia_model.h5'):
+def load_remote_model(url='https://drive.google.com/uc?export=download&id=1MS9sIo77nXwi4uo7HYEBh6srhLhQbJJ7', output='pneumonia_model.keras'):
     """Load the remote model with debugging checks."""
     output_path = output
     if check_file_download(url, output_path):
         if verify_model_file(output_path):
             try:
                 st.write(f"Attempting to load model from {output_path}...")
-                # Attempt to load with potential custom objects if needed
-                model = load_model(output_path)  # Add custom_objects={} if custom layers exist
+                model = load_model(output_path)
                 st.write("Model loaded successfully.")
                 return model
             except Exception as e:
                 st.write(f"Error loading model: {str(e)}")
-                st.write("Please check if the model was saved with compatible Keras version or custom objects.")
                 return None
     return None
+
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
@@ -168,7 +161,7 @@ if st.session_state.page == "Pneumonia Classification":
 
     if file is not None:
         image = Image.open(file).convert('RGB')
-        st.image(image, use_container_width=True)
+        st.image(image, use_column_width=True)
         
         class_name, conf_score = classify(image, model, class_names)
         st.write("## {}".format(class_name))
