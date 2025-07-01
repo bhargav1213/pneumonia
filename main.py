@@ -41,16 +41,17 @@ def verify_model_file(output_path):
     return True
 
 def load_remote_model(url='https://drive.google.com/uc?export=download&id=1MS9sIo77nXwi4uo7HYEBh6srhLhQbJJ7', output='pneumonia_model.keras'):
+    
     """Load the remote model with debugging checks."""
     output_path = output
-        try:
-            st.write(f"Attempting to load model from {output_path}...")
-            model = load_model(output_path)
-            st.write("Model loaded successfully.")
-            return model
-        except Exception as e:
-            st.write(f"Error loading model: {str(e)}")
-            return None
+    try:
+        st.write(f"Attempting to load model from {output_path}...")
+        model = load_model(output_path)
+        st.write("Model loaded successfully.")
+        return model
+    except Exception as e:
+        st.write(f"Error loading model: {str(e)}")
+        return None
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
