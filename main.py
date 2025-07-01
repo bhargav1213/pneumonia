@@ -106,12 +106,7 @@ if 'page' not in st.session_state:
 
 # Page: Pneumonia Classification
 if st.session_state.page == "Pneumonia Classification":
-    model = None
-    try:
-        model = load_model('pneumonia_model.keras', compile=False)
-        model.summary()
-    except Exception as e:
-        st.error(f"Failed to load model: {e}")
+    model = load_model("pneumonia_model.keras")
     
     class_names = ['PNEUMONIA', 'NORMAL']
     
