@@ -15,6 +15,7 @@ import gdown
 from keras.models import load_model
 import streamlit as st
 
+
 def check_file_download(url, output_path):
     """Check if the file is downloaded successfully."""
     if os.path.exists(output_path):
@@ -45,7 +46,7 @@ def verify_model_file(output_path):
     st.write(f"Model file {output_path} size: {file_size} bytes.")
     return True
 
-def load_remote_model(url='https://drive.google.com/file/d/1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing', output='pneumonia_model.h5'):
+def load_remote_model(url='https://drive.google.com/uc?export=download&id=1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU', output='pneumonia_model.h5'):
     """Load the remote model with debugging checks."""
     output_path = output
     if check_file_download(url, output_path):
@@ -59,6 +60,7 @@ def load_remote_model(url='https://drive.google.com/file/d/1cwXTjJ8KvTlrdqxT5k3t
                 st.write(f"Error loading model: {str(e)}")
                 return None
     return None
+
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
