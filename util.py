@@ -1,15 +1,16 @@
 from PIL import Image
 import numpy as np
-from keras.models import load_model
+import streamlit as st
+import base64
 
 def classify(image, model, class_names):
-    img = image.resize((224, 224))  # Resize to match model input (adjust if different)
-    img_array = np.array(img) / 255.0  # Normalize to [0, 1]
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    img = image.resize((224, 224))
+    img_array = np.array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
     prediction = model.predict(img_array)
     class_idx = np.argmax(prediction[0])
     confidence = prediction[0][class_idx]
-    if confidence < 0.5 :
+    if confidence < 0.5:
         class_idx = 1
         confidence = 1 - confidence
     return class_names[class_idx], confidence
