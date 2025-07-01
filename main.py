@@ -10,40 +10,12 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
-def check_file_download(url, output_path):
-    if os.path.exists(output_path):
-        return True
-    try:
-        gdown.download(url, output_path, quiet=False)
-        if os.path.exists(output_path):
-            return True
-        else:
-            st.write(f"Download failed: File not found at {output_path}.")
-            return False
-    except Exception as e:
-        st.write(f"Download error: {str(e)}")
-        return False
-
-def verify_model_file(output_path):
-    """Verify the integrity of the downloaded model file."""
-    if not os.path.exists(output_path):
-        st.write(f"Error: Model file {output_path} does not exist.")
-        return False
-    file_size = os.path.getsize(output_path)
-    if file_size == 0:
-        st.write(f"Error: Model file {output_path} is empty.")
-        return False
-    st.write(f"Model file {output_path} size: {file_size} bytes.")
-    return True
 
 def load_remote_model(url='https://drive.google.com/uc?export=download&id=1MS9sIo77nXwi4uo7HYEBh6srhLhQbJJ7', output='pneumonia_model.keras'):
-    
     """Load the remote model with debugging checks."""
     output_path = output
     try:
-        st.write(f"Attempting to load model from {output_path}...")
         model = load_model(output_path)
-        st.write("Model loaded successfully.")
         return model
     except Exception as e:
         st.write(f"Error loading model: {str(e)}")
