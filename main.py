@@ -53,14 +53,15 @@ def load_remote_model(url='https://drive.google.com/uc?export=download&id=1cwXTj
         if verify_model_file(output_path):
             try:
                 st.write(f"Attempting to load model from {output_path}...")
-                model = load_model(output_path)
+                # Attempt to load with potential custom objects if needed
+                model = load_model(output_path)  # Add custom_objects={} if custom layers exist
                 st.write("Model loaded successfully.")
                 return model
             except Exception as e:
                 st.write(f"Error loading model: {str(e)}")
+                st.write("Please check if the model was saved with compatible Keras version or custom objects.")
                 return None
     return None
-
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
