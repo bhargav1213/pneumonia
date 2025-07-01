@@ -10,12 +10,55 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
-def load_remote_model():
-    url = 'https://drive.google.com/file/d1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing'  
-    output = 'pneumonia_model.h5'
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
-    return load_model(output)
+import os
+import gdown
+from keras.models import load_model
+import streamlit as st
+
+def check_file_download(url, output_path):
+    """Check if the file is downloaded successfully."""
+    if os.path.exists(output_path):
+        st.write(f"File {output_path} already exists.")
+        return True
+    try:
+        st.write(f"Attempting to download from {url} to {output_path}...")
+        gdown.download(url, output_path, quiet=False)
+        if os.path.exists(output_path):
+            st.write(f"Download successful for {output_path}.")
+            return True
+        else:
+            st.write(f"Download failed: File not found at {output_path}.")
+            return False
+    except Exception as e:
+        st.write(f"Download error: {str(e)}")
+        return False
+
+def verify_model_file(output_path):
+    """Verify the integrity of the downloaded model file."""
+    if not os.path.exists(output_path):
+        st.write(f"Error: Model file {output_path} does not exist.")
+        return False
+    file_size = os.path.getsize(output_path)
+    if file_size == 0:
+        st.write(f"Error: Model file {output_path} is empty.")
+        return False
+    st.write(f"Model file {output_path} size: {file_size} bytes.")
+    return True
+
+def load_remote_model(url='https://drive.google.com/file/d/1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU/view?usp=sharing', output='pneumonia_model.h5'):
+    """Load the remote model with debugging checks."""
+    output_path = output
+    if check_file_download(url, output_path):
+        if verify_model_file(output_path):
+            try:
+                st.write(f"Attempting to load model from {output_path}...")
+                model = load_model(output_path)
+                st.write("Model loaded successfully.")
+                return model
+            except Exception as e:
+                st.write(f"Error loading model: {str(e)}")
+                return None
+    return None
 # Load GoMapsPro API key from secrets
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
