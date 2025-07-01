@@ -11,15 +11,11 @@ import streamlit.components.v1 as components
 import gdown
 
 def check_file_download(url, output_path):
-    """Check if the file is downloaded successfully."""
     if os.path.exists(output_path):
-        st.write(f"File {output_path} already exists.")
         return True
     try:
-        st.write(f"Attempting to download from {url} to {output_path}...")
         gdown.download(url, output_path, quiet=False)
         if os.path.exists(output_path):
-            st.write(f"Download successful for {output_path}.")
             return True
         else:
             st.write(f"Download failed: File not found at {output_path}.")
