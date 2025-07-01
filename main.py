@@ -1,7 +1,7 @@
 import base64
 from PIL import Image
 import streamlit as st
-from tensorflow.models import load_model
+from tensorflow.keras.models import load_model
 from util import classify, set_background
 import requests
 import urllib.parse
