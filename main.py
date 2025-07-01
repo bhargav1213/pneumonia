@@ -10,10 +10,13 @@ import os
 import streamlit.components.v1 as components
 import gdown
 
+MODEL_PATH = "pneumonia_model.h5"
 @st.cache_resource
 def get_model():
-    return load_model("pneumonia_model.keras", compile=False)
-
+    if not os.path.exists(MODEL_PATH):
+        file_id = "YOUR_FILE_ID"
+        gdown.download(f"https://drive.google.com/uc?1cwXTjJ8KvTlrdqxT5k3tNwf3_HIeSKMU", MODEL_PATH, quiet=False)
+    return load_model(MODEL_PATH, compile=False)
 
 try:
     GOOGLE_API_KEY = st.secrets["general"]["GOOGLE_API_KEY"]
