@@ -213,7 +213,7 @@ elif st.session_state.page == "Find Nearby Doctors":
         st.error("Cannot proceed: API key is missing. Please configure secrets.toml.")
     else:
         # Manual location input
-        manual_location = st.text_input("Enter your city or address (e.g., 'New York, NY')", "")
+        manual_location = st.text_input("Enter your city or address (e.g., 'Hyderbad' ,'Mumbai')", "")
         if manual_location:
             geocode_url = f"https://maps.gomaps.pro/maps/api/geocode/json?address={urllib.parse.quote(manual_location)}&key={GOOGLE_API_KEY}"
             try:
